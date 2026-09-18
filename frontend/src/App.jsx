@@ -1,14 +1,40 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 
+const detections = [
+  { label: "Car", confidence: 94, count: 5 },
+  { label: "Human", confidence: 91, count: 2 },
+  { label: "Truck", confidence: 88, count: 1 },
+  { label: "Motorbike", confidence: 86, count: 1 },
+];
+
 function App() {
+  const [altitude, setAltitude] = useState(42.3);
+  const [velocity, setVelocity] = useState(5.2);
+  const [heading, setHeading] = useState(127);
+  const [frame, setFrame] = useState(4827);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAltitude((value) => +(value + (Math.random() - 0.5) * 0.4).toFixed(1));
+      setVelocity((value) => +(value + (Math.random() - 0.5) * 0.2).toFixed(1));
+      setHeading((value) => (value + (Math.random() - 0.5) * 2 + 360) % 360);
+      setFrame((value) => value + 1);
+    }, 2000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const awareness =
+    velocity > 5.8 ? "CAUTION" : altitude < 35 ? "CAUTION" : "NORMAL";
+
   return (
     <div className="app">
 
-      {/* HEADER */}
-      <header className="header">
+      <header className="topbar">
         <div>
           <h1>AEROSENTINEL</h1>
-          <p>Flight-Aware UAV Intelligence</p>
+          <p>FLIGHT-AWARE UAV INTELLIGENCE</p>
         </div>
 
         <div className="system-status">
@@ -17,107 +43,216 @@ function App() {
         </div>
       </header>
 
-      {/* MAIN DASHBOARD */}
       <main className="dashboard">
 
-        {/* CAMERA / DETECTION AREA */}
-        <section className="camera-panel">
-          <div className="panel-title">
-            <h2>AERIAL VIEW</h2>
-            <span>RECORDED DATA</span>
-          </div>
+        {/* LEFT */}
 
-          <div className="camera-view">
-            <div className="camera-placeholder">
-              <div className="crosshair">+</div>
-              <p>UAV CAMERA FEED</p>
-              <small>Detection visualization</small>
+        <section className="main-panel">
+
+          <div className="panel-header">
+            <div>
+              <h2>AERIAL PERCEPTION</h2>
+              <span>AU-AIR RECORDED FRAME</span>
             </div>
 
-            {/* Example detection boxes */}
-            <div className="detection-box car">
-              <span>CAR 91%</span>
-            </div>
-
-            <div className="detection-box human">
-              <span>HUMAN 87%</span>
+            <div className="frame-id">
+              FRAME {frame}
             </div>
           </div>
+
+          <div className="image-container">
+
+            <img
+              src="/image/sample_1.jpg"
+              alt="Aerial UAV scene"
+            />
+
+            <div className="detection-box box-one">
+              <span>CAR 94%</span>
+            </div>
+
+            <div className="detection-box box-two">
+              <span>HUMAN 91%</span>
+            </div>
+
+            <div className="detection-box box-three">
+              <span>CAR 89%</span>
+            </div>
+
+            <div className="image-overlay">
+              AI VISION ACTIVE
+            </div>
+
+          </div>
+
+          <div className="detection-summary">
+
+            <h3>DETECTION SUMMARY</h3>
+
+            <div className="detection-grid">
+
+              {detections.map((item) => (
+                <div className="detection-card" key={item.label}>
+
+                  <div>
+                    <strong>{item.count}</strong>
+                    <span>{item.label}</span>
+                  </div>
+
+                  <small>{item.confidence}% CONF.</small>
+
+                </div>
+              ))}
+
+            </div>
+
+          </div>
+
         </section>
 
-        {/* UAV STATUS */}
-        <section className="status-panel">
-          <div className="panel-title">
-            <h2>UAV STATUS</h2>
-          </div>
+        {/* RIGHT */}
 
-          <div className="stat">
-            <span>ALTITUDE</span>
-            <strong>42.3 m</strong>
-          </div>
+        <aside className="side-panel">
 
-          <div className="stat">
-            <span>VELOCITY</span>
-            <strong>5.2 m/s</strong>
-          </div>
+          <section className="status-panel">
 
-          <div className="stat">
-            <span>GPS</span>
-            <strong>12.9698, 79.1559</strong>
-          </div>
-
-          <div className="stat">
-            <span>OBJECTS DETECTED</span>
-            <strong>7</strong>
-          </div>
-        </section>
-
-        {/* DETECTIONS */}
-        <section className="detections-panel">
-          <div className="panel-title">
-            <h2>DETECTIONS</h2>
-          </div>
-
-          <div className="detection-stats">
-            <div>
-              <strong>4</strong>
-              <span>CAR</span>
+            <div className="panel-title">
+              <h2>UAV STATUS</h2>
+              <span>TELEMETRY STREAM</span>
             </div>
 
-            <div>
-              <strong>2</strong>
-              <span>HUMAN</span>
+            <div className="telemetry-grid">
+
+              <div className="telemetry-item">
+                <span>ALTITUDE</span>
+                <strong>
+                  {altitude} <small>m</small>
+                </strong>
+              </div>
+
+              <div className="telemetry-item">
+                <span>VELOCITY</span>
+                <strong>
+                  {velocity} <small>m/s</small>
+                </strong>
+              </div>
+
+              <div className="telemetry-item">
+                <span>HEADING</span>
+                <strong>
+                  {heading.toFixed(0)}°
+                </strong>
+              </div>
+
+              <div className="telemetry-item">
+                <span>OBJECTS</span>
+                <strong>9</strong>
+              </div>
+
             </div>
 
-            <div>
-              <strong>1</strong>
-              <span>TRUCK</span>
+            <div className="gps">
+              <span>GPS POSITION</span>
+
+              <strong>
+                13.0827° N, 80.2707° E
+              </strong>
             </div>
 
-            <div>
-              <strong>0</strong>
-              <span>BUS</span>
+          </section>
+
+
+          <section className="awareness-panel">
+
+            <div className="panel-title">
+              <h2>FLIGHT AWARENESS</h2>
+              <span>CONTEXT ENGINE</span>
             </div>
-          </div>
-        </section>
 
-        {/* AWARENESS */}
-        <section className="awareness-panel">
-          <span>FLIGHT AWARENESS</span>
+            <div className="awareness-state">
 
-          <div className="awareness-status">
-            ⚠ CAUTION
-          </div>
+              <div className="awareness-icon">
+                !
+              </div>
 
-          <p>
-            Objects detected within the current flight context.
-          </p>
-        </section>
+              <div>
+                <span>CURRENT STATE</span>
+
+                <h3>
+                  {awareness}
+                </h3>
+              </div>
+
+            </div>
+
+            <p className="awareness-text">
+              Visual detections are combined with UAV
+              telemetry to provide contextual flight awareness.
+            </p>
+
+            <div className="awareness-metrics">
+
+              <div>
+                <span>VISUAL OBJECTS</span>
+                <strong>9</strong>
+              </div>
+
+              <div>
+                <span>HIGH CONFIDENCE</span>
+                <strong>7</strong>
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <section className="pipeline-panel">
+
+            <div className="panel-title">
+              <h2>AI PIPELINE</h2>
+            </div>
+
+            <div className="pipeline">
+
+              <div className="pipeline-step active">
+                <span>01</span>
+                IMAGE
+              </div>
+
+              <div className="arrow">→</div>
+
+              <div className="pipeline-step active">
+                <span>02</span>
+                YOLO
+              </div>
+
+              <div className="arrow">→</div>
+
+              <div className="pipeline-step active">
+                <span>03</span>
+                TELEMETRY
+              </div>
+
+              <div className="arrow">→</div>
+
+              <div className="pipeline-step active">
+                <span>04</span>
+                AWARENESS
+              </div>
+
+            </div>
+
+          </section>
+
+        </aside>
 
       </main>
 
       <footer>
-        AeroSentinel • UAV Situational Awareness Prototype
+        <span>AEROSENTINEL</span>
+        <span>AU-AIR MULTIMODAL UAV DATASET</span>
+        <span>PERCEPTION + TELEMETRY</span>
       </footer>
 
     </div>
