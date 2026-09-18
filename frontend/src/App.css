@@ -13,11 +13,17 @@ body {
   min-height: 100vh;
   padding: 28px 34px;
   background:
-    radial-gradient(circle at 75% 20%, rgba(30, 100, 150, 0.08), transparent 35%),
+    radial-gradient(
+      circle at 75% 20%,
+      rgba(30, 100, 150, 0.08),
+      transparent 35%
+    ),
     #070a0f;
 }
 
-/* HEADER */
+/* =========================================================
+   HEADER
+========================================================= */
 
 .topbar {
   display: flex;
@@ -58,7 +64,9 @@ body {
   box-shadow: 0 0 12px rgba(85, 216, 138, 0.7);
 }
 
-/* DASHBOARD */
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 .dashboard {
   display: grid;
@@ -110,7 +118,9 @@ body {
   letter-spacing: 1px;
 }
 
-/* IMAGE */
+/* =========================================================
+   IMAGE
+========================================================= */
 
 .image-container {
   position: relative;
@@ -138,7 +148,9 @@ body {
   letter-spacing: 1.5px;
 }
 
-/* DETECTION BOXES */
+/* =========================================================
+   DETECTION BOXES
+========================================================= */
 
 .detection-box {
   position: absolute;
@@ -179,7 +191,9 @@ body {
   top: 52%;
 }
 
-/* DETECTIONS */
+/* =========================================================
+   DETECTIONS
+========================================================= */
 
 .detection-summary {
   margin-top: 18px;
@@ -224,7 +238,9 @@ body {
   font-size: 8px;
 }
 
-/* SIDE */
+/* =========================================================
+   SIDE PANEL
+========================================================= */
 
 .side-panel {
   display: flex;
@@ -286,7 +302,9 @@ body {
   color: #aeb9c4;
 }
 
-/* AWARENESS */
+/* =========================================================
+   AWARENESS
+========================================================= */
 
 .awareness-state {
   margin-top: 20px;
@@ -339,7 +357,9 @@ body {
   font-size: 19px;
 }
 
-/* PIPELINE */
+/* =========================================================
+   PIPELINE
+========================================================= */
 
 .pipeline {
   display: flex;
@@ -373,7 +393,122 @@ body {
   font-size: 12px;
 }
 
-/* FOOTER */
+/* =========================================================
+   FLIGHT CORRIDOR LEGEND
+========================================================= */
+
+.visual-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 10px;
+  color: #687684;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.visual-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.visual-legend i {
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legend-corridor {
+  background: rgba(255, 220, 0, 0.35);
+  border: 1px solid #ffff00;
+}
+
+.legend-object {
+  background: rgba(97, 214, 255, 0.08);
+  border: 2px solid #61d6ff;
+}
+
+/* =========================================================
+   PERSISTENT OBJECT TRACKING
+========================================================= */
+
+.tracking-panel {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+.tracking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.tracking-row {
+  display: grid;
+  grid-template-columns: 55px 1fr 120px 110px;
+  align-items: center;
+  gap: 15px;
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 5px;
+}
+
+.object-id {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.object-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.object-info strong {
+  font-size: 14px;
+}
+
+.object-info span,
+.object-history span {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.object-history {
+  font-size: 11px;
+}
+
+.tracking-status {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tracking-status.persistent {
+  opacity: 1;
+}
+
+.tracking-status.tracked {
+  opacity: 0.85;
+}
+
+.tracking-status.new {
+  opacity: 0.65;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer {
   display: flex;
@@ -384,7 +519,9 @@ footer {
   letter-spacing: 1.2px;
 }
 
-/* RESPONSIVE */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 900px) {
   .dashboard {
@@ -393,6 +530,22 @@ footer {
 
   .detection-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .tracking-row {
+    grid-template-columns: 45px 1fr;
+  }
+
+  .object-history,
+  .tracking-status {
+    grid-column: 2;
+  }
+
+  .visual-legend {
+    flex-direction: column;
+    gap: 8px;
   }
 }
 
